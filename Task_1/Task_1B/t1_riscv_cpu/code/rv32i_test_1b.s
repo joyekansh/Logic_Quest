@@ -1,11 +1,9 @@
 #Trimmed rv32i test: exercises only the instructions the RTL currently executes
-#(addi, andi, ori, slti, add, sub, slt, or, and, lw, sw, beq) plus the three
-#unimplemented instructions under investigation (lui, auipc, jalr).
+#(addi, andi, ori, slti, add, sub, slt, or, and, lw, sw, beq) plus the three instructions (lui, auipc, jalr).
 #All other RV32I instructions (slli/srli/srai/xori/sltiu, sll/srl/sra/xor/sltu,
 #lb/lh/lbu/lhu, sb/sh, bne/blt/bge/bltu/bgeu, jal) are intentionally left out.
 #
-#lui/auipc/jalr are unimplemented in main_decoder.v (their opcodes fall into
-#the "default" case, which drives every control signal to X). This version
+#lui/auipc/jalr are implemented. This version
 #runs them back-to-back in normal program order -- NO pass counter, NO
 #mid-sim reset pulse, NO dispatcher. If one of them is broken, its control
 #signals go X, PCNext goes X, and the core simply fails to fetch/execute
@@ -52,21 +50,22 @@ beq_loop:   addi    x15, x15, 1                  # x15 increments each iter     
                                                   # iter2: 4==3 not taken, falls thru
             add     x16, x0, x16                 # x16 = 4 confirms loop behaved     50
 
-# ---- unimplemented instructions: straight program order, no recovery ----
-            lui     x24, 0x2000                  # x24 = 0x02000000 (expected)       54  #LUI check (NOT IMPLEMENTED)
+# ---- instructions ----
+            lui     x24, 0x2000                  # x24 = 0x02000000 (expected)       54  #LUI check
                                                   # if broken: ctrl sigs -> X,
                                                   # PCNext -> X, run fails HERE,
                                                   # auipc/jalr below never reached
 
-            auipc   x25, 0x2000                  # x25 = PC+0x02000000               58  #AUIPC check (NOT IMPLEMENTED)
+            auipc   x25, 0x2000                  # x25 = PC+0x02000000               58  #AUIPC check
                                                   #     = 0x02000058 (expected)
                                                   # only reached if lui didn't
                                                   # already take PC to X
 
-            jalr    x31, x0, 0x60                # x31 = PC+4 = 0x60 (expected)      5C  #JALR check (NOT IMPLEMENTED)
+            jalr    x31, x0, 0x60                # x31 = PC+4 = 0x60 (expected)      5C  #JALR check
                                                   # target = x0+0x60 = 0x60 (padding)
                                                   # only reached if lui/auipc
                                                   # didn't already take PC to X
 
             addi    x0, x0, 0                    # padding (only reached if jalr     60
                                                   # actually worked and jumped here)
+self:       beq     x0, x0, self                 # infinite loop                           64

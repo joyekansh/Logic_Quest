@@ -21,12 +21,7 @@ always @(a, b, alu_ctrl) begin
         4'b0010: alu_out <= a & b;                           // AND
         4'b0011: alu_out <= a | b;                           // OR
         4'b0100: alu_out <= a ^ b;                           // XOR
-        4'b0101: begin                                       // SLT (signed)
-            if (a[WIDTH-1] != b[WIDTH-1])
-                alu_out <= a[WIDTH-1] ? 32'd1 : 32'd0;     // a negative -> a < b
-            else
-                alu_out <= (a < b) ? 32'd1 : 32'd0;
-        end
+        4'b0101: alu_out <= ($signed(a) < $signed(b)) ? 32'd1 : 32'd0;       // SLT (signed)
         4'b0110: alu_out <= (a < b) ? 32'd1 : 32'd0;       // SLTU (unsigned)
         4'b0111: alu_out <= a << shamt;                     // SLL
         4'b1000: alu_out <= a >> shamt;                     // SRL (logical)

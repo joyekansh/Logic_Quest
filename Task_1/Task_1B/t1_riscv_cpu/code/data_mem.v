@@ -12,11 +12,18 @@ reg [DATA_WIDTH-1:0] data_ram [0:MEM_SIZE-1];
 
 // combinational read logic
 // word-aligned memory access
-assign rd_data_mem = data_ram[wr_addr[DATA_WIDTH-1:2] % MEM_SIZE];
+assign rd_data_mem = data_ram[wr_addr[7:2]];
 
 // synchronous write logic
 always @(posedge clk) begin
-    if (wr_en) data_ram[wr_addr[DATA_WIDTH-1:2] % MEM_SIZE] <= wr_data;
+    if (wr_en) data_ram[wr_addr[7:2]] <= wr_data;
+end
+
+integer i;
+initial begin
+    for (i = 0; i < MEM_SIZE; i = i + 1) begin
+        data_ram[i] = 0;
+    end
 end
 
 endmodule

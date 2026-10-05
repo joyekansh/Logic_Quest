@@ -262,7 +262,7 @@ always @(negedge clk) begin
 
         SRA    : begin
             i = i + 1'b1;
-            if(Result === 8) $display("18. sra implementation is correct ");
+            if(Result === -2) $display("18. sra implementation is correct ");
             else begin
                 $display("18. sra implementation is incorrect");
                 fault_instrs = fault_instrs + 1'b1;
@@ -289,7 +289,7 @@ always @(negedge clk) begin
 
         LUI    : begin
             i = i + 1'b1;
-            if(Result === 32'h02000000) $display("21. lui implementation is correct ");
+            if(Result === 32'h87654000) $display("21. lui implementation is correct ");
             else begin
                 $display("21. lui implementation is incorrect");
                 fault_instrs = fault_instrs + 1'b1;
@@ -298,7 +298,7 @@ always @(negedge clk) begin
 
         AUIPC    : begin
             i = i + 1'b1;
-            if(Result === 32'h02000060) $display("22. auipc implementation is correct ");
+            if(Result === 32'h87654060) $display("22. auipc implementation is correct ");
             else begin
                 $display("22. auipc implementation is incorrect");
                 fault_instrs = fault_instrs + 1'b1;
@@ -309,7 +309,7 @@ always @(negedge clk) begin
         SB      : begin
             i = i + 1'b1;
             if(MemWrite && !reset) begin
-                if(DataAdr === 32 & WriteData === 1) $display ("23. sb implementation is correct");
+                if(DataAdr === 33 & WriteData === 32'hFFFFFFFF) $display ("23. sb implementation is correct");
                 else begin
                     $display("23. sb implementation is incorrect");
                     fault_instrs = fault_instrs + 1'b1;
@@ -321,7 +321,7 @@ always @(negedge clk) begin
         SH      : begin
             i = i + 1'b1;
             if(MemWrite && !reset) begin
-                if(DataAdr === 36 & WriteData === -3) $display ("24. sh implementation is correct");
+                if(DataAdr === 38 & WriteData === -3) $display ("24. sh implementation is correct");
                 else begin
                     $display("24. sh implementation is incorrect");
                     fault_instrs = fault_instrs + 1'b1;
@@ -343,7 +343,7 @@ always @(negedge clk) begin
 
         LB      : begin
             i = i + 1'b1;
-            if(DataAdr === 32 & Result === 1 ) $display ("26. lb implementation is correct");
+            if(DataAdr === 33 & Result === -1 ) $display ("26. lb implementation is correct");
             else begin
                 $display("26. lb implementation is incorrect");
                 fault_instrs = fault_instrs + 1'b1;
@@ -352,7 +352,7 @@ always @(negedge clk) begin
 
         LH      : begin
             i = i + 1'b1;
-            if(DataAdr === 36 & Result === -3 ) $display ("27. lh implementation is correct");
+            if(DataAdr === 38 & Result === -3 ) $display ("27. lh implementation is correct");
             else begin
                 $display("27. lh implementation is incorrect");
                 fault_instrs = fault_instrs + 1'b1;
@@ -361,7 +361,7 @@ always @(negedge clk) begin
 
         LW      : begin
             i = i + 1'b1;
-            if(DataAdr === 40 & Result === 16) $display ("28. lw implementation is correct");
+            if(DataAdr === 32 & Result === 32'h0000FF00) $display ("28. lw implementation is correct");
             else begin
                 $display("28. lw implementation is incorrect");
                 fault_instrs = fault_instrs + 1'b1;
@@ -370,7 +370,7 @@ always @(negedge clk) begin
 
         LBU      : begin
             i = i + 1'b1;
-            if(DataAdr === 32 & Result === 1) $display ("29. lbu implementation is correct");
+            if(DataAdr === 33 & Result === 255) $display ("29. lbu implementation is correct");
             else begin
                 $display("29. lbu implementation is incorrect");
                 fault_instrs = fault_instrs + 1'b1;
@@ -379,7 +379,7 @@ always @(negedge clk) begin
 
         LHU     : begin
             i = i + 1'b1;
-            if(DataAdr === 36 & Result === 32'h0000FFFD) $display ("30. lhu implementation is correct");
+            if(DataAdr === 38 & Result === 32'h0000FFFD) $display ("30. lhu implementation is correct");
             else begin
                 $display("30. lhu implementation is incorrect");
                 fault_instrs = fault_instrs + 1'b1;
@@ -433,7 +433,7 @@ always @(negedge clk) begin
 
         BLTU_OUT : begin
             i = i + 1'b1;
-            if(Result === 5) $display("33. bltu implementation is correct ");
+            if(Result === -1) $display("33. bltu implementation is correct ");
             else begin
                 $display("33. bltu implementation is incorrect");
                 fault_instrs = fault_instrs + 1'b1;

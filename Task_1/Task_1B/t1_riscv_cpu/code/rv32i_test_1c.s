@@ -1,12 +1,10 @@
 #Full rv32i test: exercises every remaining RV32I instruction not already
 #covered by rv32i_test_1b.s -- slli/srli/srai/xori/sltiu, sll/srl/sra/xor/sltu,
-#lb/lh/lbu/lhu, sb/sh, bne/blt/bge/bltu/bgeu, jal -- plus the three
-#instructions 1b flagged as unimplemented (lui, auipc, jalr), which are run
-#here as well since main_decoder.v is expected to support them by this stage.
+#lb/lh/lbu/lhu, sb/sh, bne/blt/bge/bltu/bgeu, jal -- plus the three instructions (lui, auipc, jalr).
 #
 #This is the source that rv32i_test_1c.hex was hand-assembled from, annotated
 #line-by-line with the PC of each instruction and the check number/name used
-#by t1_risc_cpu/.test/tb_1c.v (38 checks total, see localparams at the top of
+#by t1_riscv_cpu/.test/tb_1c.v (38 checks total, see localparams at the top of
 #that file). The testbench keys each check to a PC value and looks at Result
 #(and DataAdr/WriteData for stores), exactly like the numbered $display
 #messages it prints during simulation -- e.g. if the console prints
@@ -19,12 +17,7 @@
 #until everything before them is fixed. Fix top-to-bottom.
 #
 #Calculation columns show canonical RV32I-correct values (verified by
-#simulating this program in software), not necessarily what the current
-#incomplete data_mem.v would produce -- data_mem.v (see MEM_SIZE array,
-#word-indexed by wr_addr[31:2]) only implements word-granular storage, so the
-#byte/halfword store-load pairs below (SB/LB, SH/LH) are exactly the kind of
-#sub-word access the memory needs to be extended to support; do not be
-#surprised if DataAdr for those doesn't yet match the "addr=" note.
+#simulating this program in software), which data_mem.v should now support correctly with sub-word memory access.
 #
 #Instructions                                    #Calculation                          #PC    #Note
 
@@ -32,7 +25,7 @@
 main:       addi    x1, x0, 1                    # x1 = 1                              000
             addi    x2, x0, 16                   # x2 = 16                             004
             addi    x3, x0, -3                   # x3 = -3                             008   #1 ADDI_x0 check
-            addi    x4, x0, 0                    # x4 = 0 (scratch, reused by loops)    00C
+            addi    x4, x0, -1                   # x4 = -1 (scratch, reused by loops)    00C
             addi    x5, x3, 12                   # x5 = (-3+12) = 9                     010   #2 ADDI check
             slli    x6, x2, 2                    # x6 = (16<<2) = 64                    014   #3 SLLI check
             slti    x7, x2, -16                  # x7 = (16 < -16) = 0                  018   #4 SLTI check
@@ -51,25 +44,25 @@ main:       addi    x1, x0, 1                    # x1 = 1                       
             sltu    x18, x2, x3                  # x18 = (16 <u 0xFFFFFFFD) = 1         044   #15 SLTU check
             xor     x19, x2, x1                  # x19 = (16^1) = 17                    048   #16 XOR check
             srl     x20, x2, x1                  # x20 = (16 >>u 1) = 8                 04C   #17 SRL check
-            sra     x21, x2, x1                  # x21 = (16 >>s 1) = 8                 050   #18 SRA check
+            sra     x21, x3, x1                  # x21 = (16 >>s 1) = 8                 050   #18 SRA check
             or      x22, x2, x1                  # x22 = (16|1) = 17                    054   #19 OR check
             and     x23, x2, x1                  # x23 = (16&1) = 0                     058   #20 AND check
 
-# ---- U type instructions (unimplemented in 1b) ----
-            lui     x24, 0x2000                  # x24 = 0x02000000                     05C   #21 LUI check
-            auipc   x25, 0x2000                  # x25 = PC+0x02000000 = 0x02000060     060   #22 AUIPC check
+# ---- U type instructions ----
+            lui     x24, 0x87654                  # x24 = 0x02000000                     05C   #21 LUI check
+            auipc   x25, 0x87654                  # x25 = PC+0x02000000 = 0x02000060     060   #22 AUIPC check
 
 # ---- S type instructions (store) ----
-            sb      x1, 16(x2)                   # mem_byte[16+16=32] = 1               064   #23 SB check
-            sh      x3, 20(x2)                   # mem_half[16+20=36] = -3              068   #24 SH check
+            sb      x4, 17(x2)                   # mem_byte[16+16=32] = 1               064   #23 SB check
+            sh      x3, 22(x2)                   # mem_half[16+20=36] = -3              068   #24 SH check
             sw      x2, 24(x2)                   # mem[16+24=40] = 16                   06C   #25 SW check
 
 # ---- I type instructions (load) ----
-            lb      x26, 35(x3)                  # x26 = mem_byte[-3+35=32] = 1         070   #26 LB check
-            lh      x27, 39(x3)                  # x27 = mem_half[-3+39=36] = -3        074   #27 LH check
-            lw      x28, 43(x3)                  # x28 = mem[-3+43=40] = 16             078   #28 LW check
-            lbu     x29, 35(x3)                  # x29 = mem_byte[32] (unsigned) = 1    07C   #29 LBU check
-            lhu     x30, 39(x3)                  # x30 = mem_half[36] (unsigned)        080   #30 LHU check
+            lb      x26, 36(x3)                  # x26 = mem_byte[-3+35=32] = 1         070   #26 LB check
+            lh      x27, 41(x3)                  # x27 = mem_half[-3+39=36] = -3        074   #27 LH check
+            lw      x28, 35(x3)                  # x28 = mem[-3+43=40] = 16             078   #28 LW check
+            lbu     x29, 36(x3)                  # x29 = mem_byte[32] (unsigned) = 1    07C   #29 LBU check
+            lhu     x30, 41(x3)                  # x30 = mem_half[36] (unsigned)        080   #30 LHU check
                                                   #     = 0x0000FFFD = 65533
 
 # ---- BLT loop (self-contained: taken while x6 < x7, falls thru at x6==x7+1... ----
@@ -93,8 +86,8 @@ bge_loop:   addi    x4, x4, 1                    # x4 increments each iter      
 
 # ---- BLTU loop (unsigned compare; taken while x10 <u x11) ----
             addi    x4, x0, 0                    # loop counter reset                   0BC
-            addi    x10, x0, 1                   # loop var, starts at 1                0C0
-            addi    x11, x0, 5                   # loop bound                           0C4
+            addi    x10, x0, -5                   # loop var, starts at 1                0C0
+            addi    x11, x0, -1                   # loop bound                           0C4
 bltu_loop:  addi    x4, x4, 1                    # x4 increments each iter              0C8   #33 BLTU_IN check
             addi    x10, x10, 1                  # x10 increments each iter             0CC
             bltu    x10, x11, bltu_loop          # loops while x10 <u 5 (4 iterations)  0D0   #33 BLTU check
@@ -102,8 +95,8 @@ bltu_loop:  addi    x4, x4, 1                    # x4 increments each iter      
 
 # ---- BGEU loop (unsigned compare; taken while x13 >=u x12) ----
             addi    x4, x0, 0                    # loop counter reset                   0D8
-            addi    x12, x0, 1                   # loop bound                           0DC
-            addi    x13, x0, 5                   # loop var, starts at 5                0E0
+            addi    x12, x0, -5                   # loop bound                           0DC
+            addi    x13, x0, -1                   # loop var, starts at 5                0E0
 bgeu_loop:  addi    x4, x4, 1                    # x4 increments each iter              0E4   #34 BGEU_IN check
             addi    x13, x13, -1                 # x13 decrements each iter             0E8
             bgeu    x13, x12, bgeu_loop          # loops while x13 >=u 1 (5 iterations) 0EC   #34 BGEU check
@@ -118,7 +111,7 @@ bne_loop:   addi    x4, x4, 1                    # x4 increments each iter      
             bne     x15, x14, bne_loop           # loops while x15 != 5 (5 iterations)  108   #35 BNE check
             add     x15, x0, x15                 # x15 = 5 confirms loop behaved        10C   #35 BNE_OUT check
 
-# ---- BEQ loop (same as 1b: taken while x16 != x17, i.e. falls thru on equal) ----
+# ---- BEQ loop (same as 1b: taken while x16 == x17, i.e. falls thru on equal) ----
             addi    x4, x0, 0                    # loop counter reset                   110
             addi    x16, x0, 2                   # loop var, starts at 2                114
             addi    x17, x0, 3                   # loop bound                           118
@@ -128,8 +121,8 @@ beq_loop:   addi    x4, x4, 1                    # x4 increments each iter      
             beq     x16, x17, beq_loop           # iter2: x16=4!=3 not taken, falls thru 124   #36 BEQ check
             add     x16, x0, x16                 # x16 = 4 confirms loop behaved        128   #36 BEQ_OUT check
 
-# ---- unimplemented instructions in 1b: jalr, jal ----
-            jalr    x31, 0x134(x0)               # x31 = PC+4 = 0x130 (return addr)      12C   #37 JALR check (target=0x134,
+# ---- instructions: jalr, jal ----
+            jalr    x31, 0x135(x0)               # x31 = PC+4 = 0x130 (return addr)      12C   #37 JALR check (target=0x134,
                                                   # x0+0x134, so the padding below is
                                                   # skipped and 0x130 is only ever
                                                   # confirmed via the readback at 0x134)

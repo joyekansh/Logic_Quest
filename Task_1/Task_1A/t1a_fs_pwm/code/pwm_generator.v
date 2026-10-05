@@ -45,7 +45,7 @@ reg [12:0] clk_div_cnt;   // counts 0..4999
 always @(posedge clk_5MHz or negedge reset_n) begin
     if (!reset_n) begin
         clk_div_cnt <= 13'd0;
-        clk_500Hz   <= 1'b0;
+        clk_500Hz   <= 1'b1;
     end else begin
         if (clk_div_cnt == 13'd4999) begin
             clk_div_cnt <= 13'd0;
@@ -60,13 +60,19 @@ end
 // Each step = 500 clk_5MHz cycles  (5 MHz / 500 Hz / 20 steps = 500)
 reg [8:0]  step_cnt;      // counts 0..499 within one PWM step
 reg [4:0]  pwm_step;      // counts 0..19 steps per 500 Hz period
+reg [4:0]  active_pulse_width;
 
 always @(posedge clk_5MHz or negedge reset_n) begin
     if (!reset_n) begin
         step_cnt   <= 9'd0;
         pwm_step   <= 5'd0;
         pwm_signal <= 1'b0;
+        active_pulse_width <= 5'd0;
     end else begin
+        if (step_cnt == 9'd0 && pwm_step == 5'd0) begin
+            active_pulse_width <= (pulse_width > 5'd20) ? 5'd20 : pulse_width;
+        end
+
         if (step_cnt == 9'd499) begin
             step_cnt <= 9'd0;
             if (pwm_step == 5'd19)
@@ -76,8 +82,9 @@ always @(posedge clk_5MHz or negedge reset_n) begin
         end else begin
             step_cnt <= step_cnt + 9'd1;
         end
-        // PWM output: high when current step index < pulse_width
-        pwm_signal <= (pwm_step < pulse_width) ? 1'b1 : 1'b0;
+        // PWM output: high when current step index < active_pulse_width
+        // For the very first cycle, use the new active_pulse_width
+        pwm_signal <= (pwm_step < ((step_cnt == 9'd0 && pwm_step == 5'd0) ? ((pulse_width > 5'd20) ? 5'd20 : pulse_width) : active_pulse_width)) ? 1'b1 : 1'b0;
     end
 end
  
