@@ -26,9 +26,23 @@ module frequency_scaling (
 //////////////////DO NOT MAKE ANY CHANGES ABOVE THIS LINE //////////////////
 
 
-/*
- add your code here 
- */
+// Divide 50 MHz by 10 → 5 MHz
+// Toggle clk_5MHz every 5 input clock cycles (half-period = 5 × 20 ns = 100 ns → period = 200 ns → 5 MHz)
+reg [2:0] counter;
+
+always @(posedge clk_50MHz or negedge reset_n) begin
+    if (!reset_n) begin
+        counter   <= 3'd0;
+        clk_5MHz  <= 1'b0;
+    end else begin
+        if (counter == 3'd4) begin
+            counter  <= 3'd0;
+            clk_5MHz <= ~clk_5MHz;  // toggle every 5 cycles
+        end else begin
+            counter <= counter + 3'd1;
+        end
+    end
+end
 
 //////////////////DO NOT MAKE ANY CHANGES BELOW THIS LINE //////////////////
 
