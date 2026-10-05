@@ -35,7 +35,7 @@ always @(*) begin
         // lui
         7'b0110111: controls = 13'b1_100_0_0_00_0_00_0;
         // auipc
-        7'b0010111: controls = 13'b1_100_0_0_00_0_00_0;
+        7'b0010111: controls = 13'b1_100_1_0_00_0_00_0;
         // jalr
         7'b1100111: controls = 13'b1_000_1_0_10_0_00_1;
         default:    controls = 13'bx_xxx_x_x_xx_x_xx_x;

@@ -34,9 +34,9 @@ always @(*) begin
         3'b000: branch_taken = Zero;                    // BEQ
         3'b001: branch_taken = ~Zero;                   // BNE
         3'b100: branch_taken = Less;                    // BLT  (signed)
-        3'b101: branch_taken = ~Less & ~Zero;           // BGE  (signed, i.e. >=)
+        3'b101: branch_taken = ~Less;                   // BGE  (signed, i.e. >=)
         3'b110: branch_taken = LessU;                   // BLTU (unsigned)
-        3'b111: branch_taken = ~LessU & ~Zero;          // BGEU (unsigned)
+        3'b111: branch_taken = ~LessU;                  // BGEU (unsigned)
         default: branch_taken = 1'b0;
     endcase
 end

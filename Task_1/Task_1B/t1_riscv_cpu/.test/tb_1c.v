@@ -111,7 +111,7 @@ always @(negedge clk) begin
             if(Result === -3)  $display("1. addi implementation is correct for x0 ");
             else begin
                 $display("1. addi implementation for x0 is incorrect");
-                fault_instrs = fault_instrs + 1'b1;
+                fault_instrs = fault_instrs + 1'b1; $display("Actual Result: %h", Result);
             end
         end
 
@@ -120,7 +120,7 @@ always @(negedge clk) begin
             if(Result === 9) $display("2. addi implementation is correct ");
             else begin
                 $display("2. addi implementation is incorrect");
-                fault_instrs = fault_instrs + 1'b1;
+                fault_instrs = fault_instrs + 1'b1; $display("Actual Result: %h", Result);
             end
         end
 
@@ -129,7 +129,7 @@ always @(negedge clk) begin
             if(Result === 64) $display("3. slli implementation is correct ");
             else begin
                 $display("3. slli implementation is incorrect");
-                fault_instrs = fault_instrs + 1'b1;
+                fault_instrs = fault_instrs + 1'b1; $display("Actual Result: %h", Result);
             end
         end
 
@@ -138,7 +138,7 @@ always @(negedge clk) begin
             if(Result === 0) $display("4. slti implementation is correct ");
             else begin
                 $display("4. slti implementation is incorrect");
-                fault_instrs = fault_instrs + 1'b1;
+                fault_instrs = fault_instrs + 1'b1; $display("Actual Result: %h", Result);
             end
         end
 
@@ -147,7 +147,7 @@ always @(negedge clk) begin
             if(Result === 1) $display("5. sltiu implementation is correct ");
             else begin
                 $display("5. sltiu implementation is incorrect");
-                fault_instrs = fault_instrs + 1'b1;
+                fault_instrs = fault_instrs + 1'b1; $display("Actual Result: %h", Result);
             end
         end
 
@@ -156,7 +156,7 @@ always @(negedge clk) begin
             if(Result === 2) $display("6. xori implementation is correct ");
             else begin
                 $display("6. xori implementation is incorrect");
-                fault_instrs = fault_instrs + 1'b1;
+                fault_instrs = fault_instrs + 1'b1; $display("Actual Result: %h", Result);
             end
         end
 
@@ -165,7 +165,7 @@ always @(negedge clk) begin
             if(Result === 536870911) $display("7. srli implementation is correct ");
             else begin
                 $display("7. srli implementation is incorrect");
-                fault_instrs = fault_instrs + 1'b1;
+                fault_instrs = fault_instrs + 1'b1; $display("Actual Result: %h", Result);
             end
         end
 
@@ -174,7 +174,7 @@ always @(negedge clk) begin
             if(Result === -1) $display("8. srai implementation is correct ");
             else begin
                 $display("8. srai implementation is incorrect");
-                fault_instrs = fault_instrs + 1'b1;
+                fault_instrs = fault_instrs + 1'b1; $display("Actual Result: %h", Result);
             end
         end
 
@@ -183,7 +183,7 @@ always @(negedge clk) begin
             if(Result === -1) $display("9. ori implementation is correct ");
             else begin
                 $display("9. ori implementation is incorrect");
-                fault_instrs = fault_instrs + 1'b1;
+                fault_instrs = fault_instrs + 1'b1; $display("Actual Result: %h", Result);
             end
         end
 
@@ -192,7 +192,7 @@ always @(negedge clk) begin
             if(Result === 1) $display("10. andi implementation is correct");
             else begin
                 $display("10. andi implementation is incorrect");
-                fault_instrs = fault_instrs + 1'b1;
+                fault_instrs = fault_instrs + 1'b1; $display("Actual Result: %h", Result);
             end
         end
 
@@ -201,7 +201,7 @@ always @(negedge clk) begin
             if(Result === 17) $display("11. add implementation is correct ");
             else begin
                 $display("11. add implementation is incorrect");
-                fault_instrs = fault_instrs + 1'b1;
+                fault_instrs = fault_instrs + 1'b1; $display("Actual Result: %h", Result);
             end
         end
 
@@ -210,7 +210,7 @@ always @(negedge clk) begin
             if(Result === 15) $display("12. sub implementation is correct ");
             else begin
                 $display("12. sub implementation is incorrect");
-                fault_instrs = fault_instrs + 1'b1;
+                fault_instrs = fault_instrs + 1'b1; $display("Actual Result: %h", Result);
             end
         end
 
@@ -220,7 +220,7 @@ always @(negedge clk) begin
             if(Result === 32) $display("13. sll implementation is correct ");
             else begin
                 $display("13. sll implementation is incorrect");
-                fault_instrs = fault_instrs + 1'b1;
+                fault_instrs = fault_instrs + 1'b1; $display("Actual Result: %h", Result);
             end
         end
 
@@ -229,7 +229,7 @@ always @(negedge clk) begin
             if(Result === 0) $display("14. slt implementation is correct ");
             else begin
                 $display("14. slt implementation is incorrect");
-                fault_instrs = fault_instrs + 1'b1;
+                fault_instrs = fault_instrs + 1'b1; $display("Actual Result: %h", Result);
             end
         end
 
@@ -238,7 +238,7 @@ always @(negedge clk) begin
             if(Result === 1) $display("15. sltu implementation is correct ");
             else begin
                 $display("15. sltu implementation is incorrect");
-                fault_instrs = fault_instrs + 1'b1;
+                fault_instrs = fault_instrs + 1'b1; $display("Actual Result: %h", Result);
             end
         end
 
@@ -247,7 +247,7 @@ always @(negedge clk) begin
             if(Result === 17) $display("16. xor implementation is correct ");
             else begin
                 $display("16. xor implementation is incorrect");
-                fault_instrs = fault_instrs + 1'b1;
+                fault_instrs = fault_instrs + 1'b1; $display("Actual Result: %h", Result);
             end
         end
 
@@ -256,7 +256,7 @@ always @(negedge clk) begin
             if(Result === 8) $display("17. srl implementation is correct ");
             else begin
                 $display("17. srl implementation is incorrect");
-                fault_instrs = fault_instrs + 1'b1;
+                fault_instrs = fault_instrs + 1'b1; $display("Actual Result: %h", Result);
             end
         end
 
@@ -265,7 +265,7 @@ always @(negedge clk) begin
             if(Result === -2) $display("18. sra implementation is correct ");
             else begin
                 $display("18. sra implementation is incorrect");
-                fault_instrs = fault_instrs + 1'b1;
+                fault_instrs = fault_instrs + 1'b1; $display("Actual Result: %h", Result);
             end
         end
 
@@ -274,7 +274,7 @@ always @(negedge clk) begin
             if(Result === 17) $display("19. or implementation is correct ");
             else begin
                 $display("19. or implementation is incorrect");
-                fault_instrs = fault_instrs + 1'b1;
+                fault_instrs = fault_instrs + 1'b1; $display("Actual Result: %h", Result);
             end
         end
 
@@ -283,7 +283,7 @@ always @(negedge clk) begin
             if(Result === 0) $display("20. and implementation is correct ");
             else begin
                 $display("20. and implementation is incorrect");
-                fault_instrs = fault_instrs + 1'b1;
+                fault_instrs = fault_instrs + 1'b1; $display("Actual Result: %h", Result);
             end
         end
 
@@ -292,7 +292,7 @@ always @(negedge clk) begin
             if(Result === 32'h87654000) $display("21. lui implementation is correct ");
             else begin
                 $display("21. lui implementation is incorrect");
-                fault_instrs = fault_instrs + 1'b1;
+                fault_instrs = fault_instrs + 1'b1; $display("Actual Result: %h", Result);
             end
         end
 
@@ -301,7 +301,7 @@ always @(negedge clk) begin
             if(Result === 32'h87654060) $display("22. auipc implementation is correct ");
             else begin
                 $display("22. auipc implementation is incorrect");
-                fault_instrs = fault_instrs + 1'b1;
+                fault_instrs = fault_instrs + 1'b1; $display("Actual Result: %h", Result);
             end
         end
 
@@ -309,10 +309,10 @@ always @(negedge clk) begin
         SB      : begin
             i = i + 1'b1;
             if(MemWrite && !reset) begin
-                if(DataAdr === 33 & WriteData === 32'hFFFFFFFF) $display ("23. sb implementation is correct");
+                if(DataAdr === 32 & WriteData === 32'h0000FF00) $display ("23. sb implementation is correct");
                 else begin
                     $display("23. sb implementation is incorrect");
-                    fault_instrs = fault_instrs + 1'b1;
+                    fault_instrs = fault_instrs + 1'b1; $display("Actual Result: %h", Result);
                 end
             end
         end
@@ -321,10 +321,10 @@ always @(negedge clk) begin
         SH      : begin
             i = i + 1'b1;
             if(MemWrite && !reset) begin
-                if(DataAdr === 38 & WriteData === -3) $display ("24. sh implementation is correct");
+                if(DataAdr === 36 & WriteData === 32'hFFFD0000) $display ("24. sh implementation is correct");
                 else begin
                     $display("24. sh implementation is incorrect");
-                    fault_instrs = fault_instrs + 1'b1;
+                    fault_instrs = fault_instrs + 1'b1; $display("Actual Result: %h", Result);
                 end
             end
         end
@@ -336,26 +336,26 @@ always @(negedge clk) begin
                 if(DataAdr === 40 & WriteData === 16) $display ("25. sw implementation is correct");
                 else begin
                     $display("25. sw implementation is incorrect");
-                    fault_instrs = fault_instrs + 1'b1;
+                    fault_instrs = fault_instrs + 1'b1; $display("Actual Result: %h", Result);
                 end
             end
         end
 
         LB      : begin
             i = i + 1'b1;
-            if(DataAdr === 33 & Result === -1 ) $display ("26. lb implementation is correct");
+            if(DataAdr === 32 & Result === -1 ) $display ("26. lb implementation is correct");
             else begin
                 $display("26. lb implementation is incorrect");
-                fault_instrs = fault_instrs + 1'b1;
+                fault_instrs = fault_instrs + 1'b1; $display("Actual Result: %h", Result);
             end
         end
 
         LH      : begin
             i = i + 1'b1;
-            if(DataAdr === 38 & Result === -3 ) $display ("27. lh implementation is correct");
+            if(DataAdr === 36 & Result === -3 ) $display ("27. lh implementation is correct");
             else begin
                 $display("27. lh implementation is incorrect");
-                fault_instrs = fault_instrs + 1'b1;
+                fault_instrs = fault_instrs + 1'b1; $display("Actual Result: %h", Result);
             end
         end
 
@@ -364,7 +364,7 @@ always @(negedge clk) begin
             if(DataAdr === 32 & Result === 32'h0000FF00) $display ("28. lw implementation is correct");
             else begin
                 $display("28. lw implementation is incorrect");
-                fault_instrs = fault_instrs + 1'b1;
+                fault_instrs = fault_instrs + 1'b1; $display("Actual Result: %h", Result);
             end
         end
 
@@ -373,7 +373,7 @@ always @(negedge clk) begin
             if(DataAdr === 33 & Result === 255) $display ("29. lbu implementation is correct");
             else begin
                 $display("29. lbu implementation is incorrect");
-                fault_instrs = fault_instrs + 1'b1;
+                fault_instrs = fault_instrs + 1'b1; $display("Actual Result: %h", Result);
             end
         end
 
@@ -382,7 +382,7 @@ always @(negedge clk) begin
             if(DataAdr === 38 & Result === 32'h0000FFFD) $display ("30. lhu implementation is correct");
             else begin
                 $display("30. lhu implementation is incorrect");
-                fault_instrs = fault_instrs + 1'b1;
+                fault_instrs = fault_instrs + 1'b1; $display("Actual Result: %h", Result);
             end
         end
 
@@ -400,7 +400,7 @@ always @(negedge clk) begin
             if(Result === 5) $display("31. blt implementation is correct ");
             else begin
                 $display("31. blt implementation is incorrect");
-                fault_instrs = fault_instrs + 1'b1;
+                fault_instrs = fault_instrs + 1'b1; $display("Actual Result: %h", Result);
             end
         end
 
@@ -418,7 +418,7 @@ always @(negedge clk) begin
             if(Result === -6) $display("32. bge implementation is correct");
             else begin
                 $display("32. bge implementation is incorrect");
-                fault_instrs = fault_instrs + 1'b1;
+                fault_instrs = fault_instrs + 1'b1; $display("Actual Result: %h", Result);
             end
         end
 
@@ -436,7 +436,7 @@ always @(negedge clk) begin
             if(Result === -1) $display("33. bltu implementation is correct ");
             else begin
                 $display("33. bltu implementation is incorrect");
-                fault_instrs = fault_instrs + 1'b1;
+                fault_instrs = fault_instrs + 1'b1; $display("Actual Result: %h", Result);
             end
         end
 
@@ -451,10 +451,10 @@ always @(negedge clk) begin
 
         BGEU_OUT : begin
             i = i + 1'b1;
-            if(Result === 0) $display("34. bgeu implementation is correct ");
+            if(Result === -6) $display("34. bgeu implementation is correct ");
             else begin
                 $display("34. bgeu implementation is incorrect");
-                fault_instrs = fault_instrs + 1'b1;
+                fault_instrs = fault_instrs + 1'b1; $display("Actual Result: %h", Result);
             end
         end
 
@@ -472,7 +472,7 @@ always @(negedge clk) begin
             if(Result === 5) $display("35. bne implementation is correct ");
             else begin
                 $display("35. bne implementation is incorrect");
-                fault_instrs = fault_instrs + 1'b1;
+                fault_instrs = fault_instrs + 1'b1; $display("Actual Result: %h", Result);
             end
         end
 
@@ -490,7 +490,7 @@ always @(negedge clk) begin
             if(Result === 4) $display("36. beq implementation is correct ");
             else begin
                 $display("36. beq implementation is incorrect");
-                fault_instrs = fault_instrs + 1'b1;
+                fault_instrs = fault_instrs + 1'b1; $display("Actual Result: %h", Result);
             end
         end
 
@@ -499,7 +499,7 @@ always @(negedge clk) begin
             if (Result === 32'h130) $display("37. jalr implementation is correct ");
             else begin
                 $display("37. jalr implementation is incorrect");
-                fault_instrs = fault_instrs + 1'b1;
+                fault_instrs = fault_instrs + 1'b1; $display("Actual Result: %h", Result);
             end
         end
 
@@ -508,7 +508,7 @@ always @(negedge clk) begin
             if (Result === 32'h13C ) $display("38. jal implementation is correct ");
             else begin
                 $display("38. jal implementation is incorrect");
-                fault_instrs = fault_instrs + 1'b1;
+                fault_instrs = fault_instrs + 1'b1; $display("Actual Result: %h", Result);
             end
         end
 

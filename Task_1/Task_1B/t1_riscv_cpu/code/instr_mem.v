@@ -11,7 +11,7 @@ reg [DATA_WIDTH-1:0] instr_ram [0:MEM_SIZE-1];
 
 initial begin
 //    $readmemh("../code/rv32i_book.hex", instr_ram);
-    $readmemh("../code/rv32i_test_1b.hex", instr_ram);
+    $readmemh("../code/rv32i_test_1c.hex", instr_ram);
 //    $readmemh("../code/rv32i_test_1c.hex", instr_ram);
 end
 
